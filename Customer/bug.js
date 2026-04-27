@@ -37,22 +37,22 @@ class Bank {
     }
 
 }
-const newAccount = new Bank('John Doe')
+// const newAccount = new Bank('John Doe')
 
-newAccount.addAmount = 1000
-console.log(newAccount.getBalance)
+// newAccount.addAmount = 1000
+// console.log(newAccount.getBalance)
 
-newAccount.addAmount = 500
-console.log(newAccount.getBalance)
-console.log(newAccount.getHistory)
+// newAccount.addAmount = 500
+// console.log(newAccount.getBalance)
+// console.log(newAccount.getHistory)
 
-console.log(newAccount.publicInfo())
-console.log(Object.getPrototypeOf(newAccount))
+// console.log(newAccount.publicInfo())
+// console.log(Object.getPrototypeOf(newAccount))
 
 
-newAccount.addAmount = 500000
-console.log(newAccount.getBalance)
-console.log(newAccount.getHistory)
+// newAccount.addAmount = 500000
+// console.log(newAccount.getBalance)
+// console.log(newAccount.getHistory)
 
 
 
@@ -60,16 +60,42 @@ console.log(newAccount.getHistory)
 // ===================== Event Listener ==============
 
 //Create Customer Form
-
-document.getElementById('createCustomerForm').addEventListener('submit',(e) =>{
+document.getElementById('createCustomerForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    try{
-        const name = document.getElementById('customerName').value ;
-        const deposit = document.getElementById('deposit').value ;
-        console.log(name, deposit)
-    }catch(error){
-        console.log(error)
+    try {
+        const name = document.getElementById('customerName').value;
+        const deposit = parseFloat(document.getElementById('deposit').value);
+        console.log(name, deposit);
 
+        // Create the new account object inside the event listener
+        const newAccount1 = new Bank(name);
+        newAccount1.addAmount = deposit;
+
+        console.log(newAccount1.getHistory);
+        console.log(newAccount1.publicInfo());
+
+        // Dynamically show and hide the detail section by adding/removing a class
+        document.getElementById('detail').addEventListener('click', (e) => {
+            console.log("Show detail button clicked");
+            e.preventDefault();
+            const detailSection = document.getElementById('detail-section');
+            detailSection.classList.remove('hidden'); // Show the section
+
+            const p = document.getElementById('info').textContent = newAccount1.publicInfo();
+            const bal = document.getElementById('bal').textContent = newAccount1.getBalance;
+        });
+
+        document.getElementById('hide').addEventListener('click', (e) => {
+            console.log("Hide button clicked");
+            e.preventDefault();
+            const detailSection = document.getElementById('detail-section');
+            detailSection.classList.add('hidden'); // Hide the section
+
+            const p = document.getElementById('info').textContent = "";
+            const bal = document.getElementById('bal').textContent = "";
+        });
+
+    } catch (error) {
+        console.log(error);
     }
-}
-)
+});

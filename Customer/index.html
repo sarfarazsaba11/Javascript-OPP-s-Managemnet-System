@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <script src="bug.js" ></script>
+    <script src="bug.js"  defer ></script>
 </head>
 <body>
     <div class="container">
@@ -17,7 +17,26 @@
                 <input type = "number" placeholder="Enter deposit" id="deposit" required/>
                 <button type="submit">Submit</button>
             </form>
+          
+        </section class= "card">
+
+        <section class="button" >
+            <button id="detail" >Show Account Detail</button>
+            <button id="hide">Hide Account Details</button>
         </section>
+    <section class="card hidden" id="detail-section">
+        <div class="details">
+            <p>Name:</p>
+            <p id="info"></p>
+
+        </div>
+         <div class="details">
+            <p>Balance:</p>
+            <p id="bal"></p>
+
+        </div>
+
+    </section>
 
     </div>
     

@@ -32,6 +32,15 @@ h1 {
     margin-bottom: 20px;
     box-shadow: 0 10px 30px rgba(202, 134, 134, 0.733);
 }
+
+.button{
+    margin:20px 0;
+}
+
+.details{
+    display: flex;
+    gap:5px;
+}
     
     
 
@@ -59,4 +68,8 @@ input, button{
 
 button{
     background-color: #bba6f1f3;
+}
+
+.hidden{
+    display:none;
 }
