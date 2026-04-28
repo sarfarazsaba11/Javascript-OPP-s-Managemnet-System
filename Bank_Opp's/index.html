@@ -18,25 +18,44 @@
                 <button type="submit">Submit</button>
             </form>
           
-        </section class= "card">
+        </section>
 
         <section class="button" >
-            <button id="detail" >Show All Customer Detail</button>
-            <button id="hide">Hide Hide All Customer Details</button>
+            <button id="showCustomerDetail" >Show All Customer Detail</button>
+            <button id="hideCustomerDetail">Hide Hide All Customer Details</button>
         </section>
-    <section class="card hidden" id="detail-section">
-        <div class="details">
-            <p>Name:</p>
-            <p id="info"></p>
+    
+        <section class="card hidden" id="customerDetailSection">
+            <div class="details" id="customer-detail">
+        
+            </div>
+        
+        </section>
 
-        </div>
-         <div class="details">
-            <p>Balance:</p>
-            <p id="bal"></p>
-
-        </div>
-
+    <section class="card">
+            <h2>Create Account</h2>
+            <form  id="createAccountForm">
+                <input type = "text" placeholder="Enter Customer id" id="customerId" required />
+                <input type =  "number" placeholder="Enter Deposit Amount" id="deposit" required/>
+                <button type="submit">Submit</button>
+            </form>
+          
     </section>
+
+    <section class="button" >
+        <button id="showAccountDetail" >Show All Account Details</button>
+        <button id="hideAccountDetail">Hide Hide All Account Details</button>
+    </section>
+
+     <section class="card hidden" id="accountDetailSection">
+            <div class="details" id="account-detail">
+        
+            </div>
+        
+        </section>
+
+      <!-- Messages -->
+        <div id="message" class="message"></div>
 
     </div>
     

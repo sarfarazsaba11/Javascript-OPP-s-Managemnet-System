@@ -70,7 +70,7 @@ class Account{
             accountNumber: this.accountNumber,
             customerId: this.customerId,
             balance: this.balance,
-            type: this.constructor.name, // Gets class name
+         //   type: this.constructor.name, // Gets class name
             createdAt: this.createdAt.toLocaleDateString(),
             isActive: this.isActive,
            // transactionCount: this.transactions.length
@@ -182,33 +182,149 @@ document.getElementById('createCustomerForm').addEventListener('submit', (e) => 
         console.log(name, email);
 
         // Create the new customer object inside the event listener
-         bank.createCustomer(name, email)
+        const customer =  bank.createCustomer(name, email)
+         showMessage(`User ${customer.name} created  successfully`)
 
         console.log(bank.getAllCustomers());
 
+        // Call displayCustomers to update the UI
+        displayCustomers();
+
+         // Reset form
+        e.target.reset();
+        
+
 
         // Dynamically show and hide the detail section by adding/removing a class
-        document.getElementById('detail').addEventListener('click', (e) => {
+        document.getElementById('showCustomerDetail').addEventListener('click', (e) => {
+
+
             console.log("Show detail button clicked");
             e.preventDefault();
-            const detailSection = document.getElementById('detail-section');
-            detailSection.classList.remove('hidden'); // Show the section
-
-            const p = document.getElementById('info').textContent = newAccount1.publicInfo();
-            const bal = document.getElementById('bal').textContent = newAccount1.getBalance;
+            const customerdetailSection = document.getElementById('customerDetailSection');
+            customerdetailSection.classList.remove('hidden'); // Show the section    
         });
 
-        document.getElementById('hide').addEventListener('click', (e) => {
+        document.getElementById('hideCustomerDetail').addEventListener('click', (e) => {
             console.log("Hide button clicked");
             e.preventDefault();
-            const detailSection = document.getElementById('detail-section');
+            const detailSection = document.getElementById('customerDetailSection');
             detailSection.classList.add('hidden'); // Hide the section
 
-            const p = document.getElementById('info').textContent = "";
-            const bal = document.getElementById('bal').textContent = "";
-        });
+      });
 
     } catch (error) {
-        console.log(error);
+        showMessage(error.message, "failure")
     }
+});
+
+//Create Account Form 
+document.getElementById('createAccountForm').addEventListener('submit', (e) =>{
+    e.preventDefault()
+    try{
+        const cusId = document.getElementById('customerId').value;
+        const deposit = document.getElementById('deposit').value;
+        console.log(cusId, typeof deposit);
+
+         // Create the account by customerId object inside the event listener
+        const customerAccount =  bank.createAccount(cusId,deposit)
+         showMessage(`User ${customerAccount.accountNumber} created  successfully`)
+
+        console.log(bank.getAllAccounts(), "saba");
+
+        // Call displayCustomers to update the UI
+        displayAccounts();
+
+         // Reset form
+        e.target.reset();
+
+        document.getElementById("showAccountDetail").addEventListener('click', ()=>{
+            console.log("show account detail button clicked")
+            e.preventDefault();
+            const showAccountDetail = document.getElementById("accountDetailSection")
+            showAccountDetail.classList.remove('hidden');
+        
+        })
+
+        document.getElementById("hideAccountDetail").addEventListener('click', ()=>{
+            console.log("hide account detail button clicked")
+            e.preventDefault();
+            const hideAccountDetail = document.getElementById("accountDetailSection")
+            hideAccountDetail.classList.add("hidden")
+        })
+        
+
+    }catch(error){
+        showMessage(error.message, "failure")
+    }
+}
+);
+// ==================== UI FUNCTIONS ====================
+
+// Show message to user
+function showMessage(text, type = 'success') {
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = text;
+    messageDiv.className = `message ${type} show`;
+    
+    setTimeout(() => {
+        messageDiv.classList.remove('show');
+    }, 3000);
+}
+
+// Display all customers
+function displayCustomers() {
+    const container = document.getElementById('customer-detail');
+    const customers = bank.getAllCustomers();
+    
+    if (customers.length === 0) {
+        container.innerHTML = '<p>No customers yet.</p>';
+        return;
+    }
+    if(customers.length != 0){
+
+        console.log(container)
+        console.log(customers)
+        
+        container.innerHTML = customers.map(cust => `
+            <div class="customer-item">
+                <h4>👤 ${cust.name}</h4>
+                <p>ID: ${cust.id}</p>
+                <p>Email: ${cust.email}</p>
+                <p>Created: ${cust.createdAt}</p>
+            </div>
+        `).join('');
+    }
+}
+
+function displayAccounts() {
+    const container = document.getElementById('account-detail');
+    const accounts = bank.getAllAccounts();
+    
+    if (accounts.length === 0) {
+        container.innerHTML = '<p>No accounts created yet.</p>';
+        return;
+    }
+    if(accounts.length != 0){
+
+        console.log(container)
+        console.log(accounts)
+        
+        container.innerHTML = accounts.map(acc => `
+            <div class="customer-item">
+                <h4>👤 ${acc.accountNumber}</h4>
+                <p>Customer ID: ${acc.customerId}</p>
+                <p>Balance: ${acc.balance}</p>
+            </div>
+        `).join('');
+    }
+}
+
+// ==================== INITIALIZE UI ====================
+document.addEventListener('DOMContentLoaded', () => {
+    displayCustomers();
+   
+    
+    console.log('🏦 Bank Management System Loaded!');
+    console.log('Bank Object:', bank);
 });
