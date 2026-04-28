@@ -158,14 +158,57 @@ class Bank {
 
 const bank = new Bank("Js bank")
 
-const customer = bank.createCustomer("saba", "saba@gmail.com")
-const customer2 = bank.createCustomer("Haris","haris@gmail.com" )
+// const customer = bank.createCustomer("saba", "saba@gmail.com")
+// const customer2 = bank.createCustomer("Haris","haris@gmail.com" )
 
 
 
-console.log(customer.getInfo(), customer2.getInfo())
+// console.log(customer.getInfo(), customer2.getInfo())
 
-const acc1 = bank.createAccount("1001", 400)
-const acc2 = bank.createAccount("1002", 500)
+// const acc1 = bank.createAccount("1001", 400)
+// const acc2 = bank.createAccount("1002", 500)
 
-console.log(acc1.getAccountInfo(), acc2.getAccountInfo())
+// console.log(acc1.getAccountInfo(), acc2.getAccountInfo())
+
+
+// ===================== Event Listener ==============
+
+//Create Customer Form
+document.getElementById('createCustomerForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    try {
+        const name = document.getElementById('customerName').value;
+        const email = document.getElementById('email').value;
+        console.log(name, email);
+
+        // Create the new customer object inside the event listener
+         bank.createCustomer(name, email)
+
+        console.log(bank.getAllCustomers());
+
+
+        // Dynamically show and hide the detail section by adding/removing a class
+        document.getElementById('detail').addEventListener('click', (e) => {
+            console.log("Show detail button clicked");
+            e.preventDefault();
+            const detailSection = document.getElementById('detail-section');
+            detailSection.classList.remove('hidden'); // Show the section
+
+            const p = document.getElementById('info').textContent = newAccount1.publicInfo();
+            const bal = document.getElementById('bal').textContent = newAccount1.getBalance;
+        });
+
+        document.getElementById('hide').addEventListener('click', (e) => {
+            console.log("Hide button clicked");
+            e.preventDefault();
+            const detailSection = document.getElementById('detail-section');
+            detailSection.classList.add('hidden'); // Hide the section
+
+            const p = document.getElementById('info').textContent = "";
+            const bal = document.getElementById('bal').textContent = "";
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+});

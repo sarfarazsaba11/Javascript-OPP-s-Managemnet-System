@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"  defer ></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Bank Prototype</h1>
+        <section class="card">
+            <h2>Enter Customer Details</h2>
+            <form  id="createCustomerForm">
+                <input type = "text" placeholder="Enter Customer Name" id="customerName" required />
+                <input type =  "text" placeholder="Enter Customer Email" id="email" required/>
+                <button type="submit">Submit</button>
+            </form>
+          
+        </section class= "card">
+
+        <section class="button" >
+            <button id="detail" >Show All Customer Detail</button>
+            <button id="hide">Hide Hide All Customer Details</button>
+        </section>
+    <section class="card hidden" id="detail-section">
+        <div class="details">
+            <p>Name:</p>
+            <p id="info"></p>
+
+        </div>
+         <div class="details">
+            <p>Balance:</p>
+            <p id="bal"></p>
+
+        </div>
+
+    </section>
+
+    </div>
+    
+</body>
+</html>
