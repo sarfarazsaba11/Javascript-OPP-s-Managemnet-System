@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OPP BANK MANAGEMENT SYSTEM</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js"  defer ></script>
+    <script src="app.js"  async ></script>
 </head>
 <body>
     <div class="container">
@@ -52,7 +52,33 @@
         
             </div>
         
-        </section>
+    </section>
+
+    <section class="card">
+        <h2>Banking Oepration</h2>
+        <div class="operations">
+            <div class="operation-box">
+                    <h3>Deposit Money</h3>
+                    <select id="depositAccount" class="account-select">
+                        <option value="">Select Account</option>
+                    </select>
+                    <input type="number" id="depositAmount" placeholder="Amount" min="0" step="0.01">
+                    <button onclick="performDeposit()">Deposit</button>
+                </div>
+
+                <div class="operation-box">
+                    <h3>Withdraw Money</h3>
+                    <select id="withdrawAccount" class="account-select">
+                        <option value="">Select Account</option>
+                    </select>
+                    <input type="number" id="withdrawAmount" placeholder="Amount" min="0" step="0.01">
+                    <button onclick="performWithdraw()">Withdraw</button>
+                </div>
+            
+
+           
+        </div>
+    </section>
 
       <!-- Messages -->
         <div id="message" class="message"></div>

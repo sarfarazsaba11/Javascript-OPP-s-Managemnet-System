@@ -38,8 +38,7 @@ class Account{
       if (amount <= 0) {
             throw new Error('Deposit amount must be positive');
         }
-
-
+        
   this.balance += amount;
   return this.balance;
 
@@ -179,34 +178,26 @@ document.getElementById('createCustomerForm').addEventListener('submit', (e) => 
     try {
         const name = document.getElementById('customerName').value;
         const email = document.getElementById('email').value;
-        console.log(name, email);
 
         // Create the new customer object inside the event listener
         const customer =  bank.createCustomer(name, email)
          showMessage(`User ${customer.name} created  successfully`)
-
-        console.log(bank.getAllCustomers());
 
         // Call displayCustomers to update the UI
         displayCustomers();
 
          // Reset form
         e.target.reset();
-        
-
 
         // Dynamically show and hide the detail section by adding/removing a class
         document.getElementById('showCustomerDetail').addEventListener('click', (e) => {
 
-
-            console.log("Show detail button clicked");
             e.preventDefault();
             const customerdetailSection = document.getElementById('customerDetailSection');
             customerdetailSection.classList.remove('hidden'); // Show the section    
         });
 
         document.getElementById('hideCustomerDetail').addEventListener('click', (e) => {
-            console.log("Hide button clicked");
             e.preventDefault();
             const detailSection = document.getElementById('customerDetailSection');
             detailSection.classList.add('hidden'); // Hide the section
@@ -223,14 +214,11 @@ document.getElementById('createAccountForm').addEventListener('submit', (e) =>{
     e.preventDefault()
     try{
         const cusId = document.getElementById('customerId').value;
-        const deposit = document.getElementById('deposit').value;
-        console.log(cusId, typeof deposit);
+        const deposit = parseInt(document.getElementById('deposit').value);
 
          // Create the account by customerId object inside the event listener
         const customerAccount =  bank.createAccount(cusId,deposit)
          showMessage(`User ${customerAccount.accountNumber} created  successfully`)
-
-        console.log(bank.getAllAccounts(), "saba");
 
         // Call displayCustomers to update the UI
         displayAccounts();
@@ -239,7 +227,6 @@ document.getElementById('createAccountForm').addEventListener('submit', (e) =>{
         e.target.reset();
 
         document.getElementById("showAccountDetail").addEventListener('click', ()=>{
-            console.log("show account detail button clicked")
             e.preventDefault();
             const showAccountDetail = document.getElementById("accountDetailSection")
             showAccountDetail.classList.remove('hidden');
@@ -247,13 +234,12 @@ document.getElementById('createAccountForm').addEventListener('submit', (e) =>{
         })
 
         document.getElementById("hideAccountDetail").addEventListener('click', ()=>{
-            console.log("hide account detail button clicked")
             e.preventDefault();
             const hideAccountDetail = document.getElementById("accountDetailSection")
             hideAccountDetail.classList.add("hidden")
         })
+        updateAccountDropdowns();
         
-
     }catch(error){
         showMessage(error.message, "failure")
     }
@@ -282,9 +268,6 @@ function displayCustomers() {
         return;
     }
     if(customers.length != 0){
-
-        console.log(container)
-        console.log(customers)
         
         container.innerHTML = customers.map(cust => `
             <div class="customer-item">
@@ -306,9 +289,6 @@ function displayAccounts() {
         return;
     }
     if(accounts.length != 0){
-
-        console.log(container)
-        console.log(accounts)
         
         container.innerHTML = accounts.map(acc => `
             <div class="customer-item">
@@ -320,11 +300,74 @@ function displayAccounts() {
     }
 }
 
+
+// Update all dropdowns with accounts
+function updateAccountDropdowns() {
+    const accounts = bank.getAllAccounts();
+    const dropdowns = document.querySelectorAll('.account-select');
+    
+    dropdowns.forEach(dropdown => {
+        dropdown.innerHTML = '<option value="">Select Account</option>';
+        accounts.forEach(acc => {
+            const customer = bank.findCustomerById(acc.customerId);
+            const option = document.createElement('option');
+            option.value = acc.accountNumber;
+            option.textContent = `${acc.accountNumber} - ${customer.name} - Balance: $${acc.balance}`;
+            dropdown.appendChild(option);
+        });
+    });
+}
+
+// Perform deposit
+function performDeposit() {
+    try {
+        const accountNumber = document.getElementById('depositAccount').value;
+        const amount = parseFloat(document.getElementById('depositAmount').value);
+        
+        if (!accountNumber) throw new Error('Please select an account');
+        if (!amount || amount <= 0) throw new Error('Please enter a valid amount');
+        
+        const account = bank.findAccount(accountNumber);
+
+        console.log(account,"account")
+        account.deposit(amount);
+        
+        showMessage(`Successfully deposited $${amount.toFixed(2)}`, 'success');
+        document.getElementById('depositAmount').value = '';
+        updateAccountDropdowns();
+        displayAccounts();
+    } catch (error) {
+        showMessage(error.message, 'error');
+    }
+}
+
+// Perform withdrawal
+function performWithdraw() {
+    try {
+        const accountNumber = document.getElementById('withdrawAccount').value;
+        const amount = parseFloat(document.getElementById('withdrawAmount').value);
+        
+        if (!accountNumber) throw new Error('Please select an account');
+        if (!amount || amount <= 0) throw new Error('Please enter a valid amount');
+        
+        const account = bank.findAccount(accountNumber);
+        account.withdraw(amount);
+        
+        showMessage(`Successfully withdrew $${amount.toFixed(2)}`, 'success');
+        document.getElementById('withdrawAmount').value = '';
+        updateAccountDropdowns();
+        displayAccounts();
+    } catch (error) {
+        showMessage(error.message, 'error');
+    }
+}
 // ==================== INITIALIZE UI ====================
 document.addEventListener('DOMContentLoaded', () => {
     displayCustomers();
+    updateAccountDropdowns();
    
     
     console.log('🏦 Bank Management System Loaded!');
     console.log('Bank Object:', bank);
+
 });

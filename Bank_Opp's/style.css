@@ -24,6 +24,18 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
+h2{
+  color: #667eea;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #764ba2;
+    margin-bottom: 15px;
+}
+
 
 .card{
     background-color: white;
@@ -44,12 +56,6 @@ h1 {
     
     
 
-h2{
-  color: #667eea;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #667eea;
-    padding-bottom: 10px;
-}
 
 form {
     display: flex;
@@ -57,12 +63,17 @@ form {
     flex-wrap: wrap;
 }
 
-input, button{
-    padding:10px;
+input,select, button{
+    padding:12px;
     border-radius:5px;
     border: 2px solid #e0e0e0;
     font-size:14px;
     transition:all 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none; 
+    border-color: #667eea;
 }
 
 
@@ -99,6 +110,31 @@ button{
     color: #555;
     font-size: 14px;
     margin: 3px 0;
+}
+
+/* Operations */
+.operations{
+  display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.operation-box{
+    
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+
+}
+
+.operation-box input, 
+.operation-box select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.operation-box button {
+    width: 100%;
 }
 
 
