@@ -84,7 +84,7 @@ button{
 
 }
 
-#customer-detail{
+#customer-detail, #account-detail{
     display:flex;
     flex-direction: column;
     gap:5px;
