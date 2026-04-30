@@ -404,3 +404,38 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Bank Object:', bank);
 
 });
+
+function showTransactions(){
+    const accountNumber = document.getElementById("accNum").value
+    const container =document.getElementById("trans")
+
+    const transactions= bank.findAccount(accountNumber).transactions
+
+    console.log("accNum", accountNumber)
+    console.log(transactions)
+    if (!accountNumber) {
+        container.innerHTML = '<p>Please select an account.</p>';
+        return;
+    }
+
+    if (transactions.length === 0) {
+        container.innerHTML = '<p>No transactions yet.</p>';
+        return;
+    }
+
+    container.innerHTML = transactions.reverse().map(trans => `
+        <div class="transaction-item">
+            <div>
+                <span class="transaction-type ${trans.type}">${trans.type}</span>
+                <div class="transaction-date">${trans.date}</div>
+            </div>
+            <div>
+                <div class="transaction-amount">$${trans.amount.toFixed(2)}</div>
+                <div style="font-size: 12px; color: #888;">Balance: $${trans.balanceAfter.toFixed(2)}</div>
+            </div>
+        </div>
+    `).join('');
+
+
+
+}
