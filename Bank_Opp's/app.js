@@ -20,6 +20,26 @@ class Customer {
     }
 }
 
+// Transaction Class - Records each transaction
+class Transaction {
+    constructor(type, amount, balanceAfter) {
+        this.id = Date.now() + Math.random(); // Unique ID
+        this.type = type; // 'deposit', 'withdraw', 'transfer-in', 'transfer-out'
+        this.amount = amount;
+        this.balanceAfter = balanceAfter;
+        this.date = new Date();
+    }
+
+    getDetails() {
+        return {
+            id: this.id,
+            type: this.type,
+            amount: this.amount,
+            balanceAfter: this.balanceAfter,
+            date: this.date.toLocaleString()
+        };
+    }
+}
 class Account{
 
      static accountCounter = 10000; // Static property for account numbers
@@ -28,7 +48,7 @@ class Account{
         this.accountNumber = ++Account.accountCounter;
         this.customerId = customerId;
         this.balance = initialDeposit;
-       // this.transactions = []; // Array to store transaction history
+        this.transactions = []; // Array to store transaction history
         this.createdAt = new Date();
         this.isActive = true;
 
@@ -40,6 +60,7 @@ class Account{
         }
         
   this.balance += amount;
+  this.recordTransaction('deposit', amount);
   return this.balance;
 
 }
@@ -54,7 +75,7 @@ class Account{
         }
         
         this.balance -= amount;
-        // this.recordTransaction('withdraw', amount);
+        this.recordTransaction('withdraw', amount);
         return this.balance;
     }
 
@@ -69,14 +90,22 @@ class Account{
             accountNumber: this.accountNumber,
             customerId: this.customerId,
             balance: this.balance,
-         //   type: this.constructor.name, // Gets class name
+            type: this.constructor.name, // Gets class name
             createdAt: this.createdAt.toLocaleDateString(),
             isActive: this.isActive,
-           // transactionCount: this.transactions.length
+            transactionCount: this.transactions.length
         };
     }
 
+    recordTransaction(type,amount){
+        const transaction = new Transaction(type, amount, this.balance)
+         this.transactions.push(transaction)
+
+    }
+
 }
+
+
 
 class Bank {
     constructor(name) {
@@ -218,8 +247,12 @@ document.getElementById('createAccountForm').addEventListener('submit', (e) =>{
 
          // Create the account by customerId object inside the event listener
         const customerAccount =  bank.createAccount(cusId,deposit)
-         showMessage(`User ${customerAccount.accountNumber} created  successfully`)
 
+        console.log(customerAccount)
+        const customer = bank.findCustomerById(customerAccount.customerId)
+        console.log(customer.name)
+        showMessage(`User ${customer.name.toLowerCase()} account ${customerAccount.accountNumber} created  successfully`)
+         
         // Call displayCustomers to update the UI
         displayAccounts();
 
